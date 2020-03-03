@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import PropTypes from 'prop-types'
+import Home from './pages/Home'
+import Results from './pages/Results'
+import MovieDetail from './pages/MovieDetail'
 
-function App() {
+const App = ({ store }) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Provider store={store}>
+      <Router>
+        <div>
+          <Route exact path='/' component={Home} />
+          <Route path='/results' component={Results} />
+          <Route path='/movie/:id' component={MovieDetail} />
+        </div>
+      </Router>
+    </Provider>
+  )
 }
 
-export default App;
+App.propTypes = {
+  store: PropTypes.object.isRequired
+}
+
+export default App
