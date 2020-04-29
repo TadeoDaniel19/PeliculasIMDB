@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, CircularProgress } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
 import queryString from 'query-string'
@@ -10,10 +10,12 @@ export default ({ location }) => {
   const dispatch = useDispatch()
   const movies = useSelector(state => movieResults(state))
   const isLoading = useSelector(state => isSearchLoading(state))
+  const [isLooked, setIsLooked] = useState(false)
 
   useEffect(() => {
     const { movieName } = queryString.parse(location.search)
-    if (movieName && !movies) {
+    if (movieName && !isLooked) {
+      setIsLooked(true)
       dispatch(searchMovie({ movieName }))
     }
   })
